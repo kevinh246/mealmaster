@@ -6,3 +6,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model UserAcccount {
+  id String @id @default(uuid())
+  email String
+  fullname String
+  onboardingCompleted Boolean @default(false)
+
+  vegetablesPreference Json
+  dairyPreference Json
+  meatPrefrence Json
+  grainsPrefrence Json
+  fruitsPreference Json
+  seafoodPreference Json
+  hasGenerated Boolean @default(false)
+}
