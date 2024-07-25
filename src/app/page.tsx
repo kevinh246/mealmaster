@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { ReactTyped } from "react-typed";
 
 export default async function Home() {
 
@@ -8,7 +11,10 @@ export default async function Home() {
         Welcome to Mealmaster 🎉
       </h1>
       <p className="mt-3">
-        Get started on your journey towards a healthier meal
+        <ReactTyped
+          strings={["Get started on your journey towards a healthier meal"]}
+          typeSpeed={70}
+        />
       </p>
       <img 
         src="/assets/imgs/landing.png" 
@@ -18,7 +24,7 @@ export default async function Home() {
       />
       <Link 
         href="/dashboard"
-        className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none mt-3 px-20 rounded-full"
+        className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none font-medium mt-3 px-20 rounded-full"
       >
         Start my journey
       </Link>
