@@ -61,5 +61,41 @@ export async function completeOnboarding(gender: string, weight: number, age: nu
    }
 }
 
+export async function saveMealPreferenceGroup(
+    vegetablesPreference: any, 
+    dairyPreference: any,
+    meatPreference: any,
+    grainsPreference: any,
+    fruitsPreference: any,
+    seafoodPreference: any,
+) {
+    const user: User | null = await currentUser();
 
+    await prisma.userAccount.update({
+        where: {
+            id: user?.id,
+        },
+        data: {
+            vegetablesPreference: vegetablesPreference,
+            dairyPreference: dairyPreference,
+            meatPreference: meatPreference,
+            grainsPreference: grainsPreference,
+            fruitsPreference: fruitsPreference,
+            seafoodPreference: seafoodPreference,
 
+        },
+    });
+}
+
+export async function incrementNoOfMealPlanGenerated() {
+    const user: User | null = await currentUser();
+
+    await prisma.userAccount.update({
+        where: {
+            id: user?.id,
+        },
+        data: {
+            // Increment the field generationLimit = current generationLimit + 1
+        },
+    });
+}
