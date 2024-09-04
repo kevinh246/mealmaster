@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-bordered {
+    @apply
+    border border-gray-200 focus:outline-gray-700 rounded-md placeholder:text-gray-300
+}
+
+.btn {
+    @apply
+    font-medium
+}
+
+.btn-black {
+    @apply
+    bg-black hover:bg-black text-white font-medium rounded-md no-animation shadow-none border-none
+}
+
+.btn-outline-black {
+    @apply
+    bg-transparent hover:bg-gray-50 font-medium rounded-md no-animation shadow-none border border-gray-500 hover:border-gray-500
+}
