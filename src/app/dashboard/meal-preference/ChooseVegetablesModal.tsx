@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export default function ChooseVegetablesModal({
   openVegetablesModal,
   setOpenVegetablesModal,
+  onSelectionChange, // Accept the callback as a prop
 }: {
   openVegetablesModal: boolean;
   setOpenVegetablesModal: (open: boolean) => void;
+  onSelectionChange: (selected: string[]) => void; // Define the callback type
 }) {
   // Reference of the vegetables dialog box
   const vegetablesModalRef = useRef<HTMLDialogElement>(null);
@@ -34,11 +36,11 @@ export default function ChooseVegetablesModal({
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedVegetables((prev) =>
-      isChecked
-        ? [...prev, vegetableName]
-        : prev.filter((veg) => veg !== vegetableName)
-    );
+    const updatedSelection = isChecked
+      ? [...selectedVegetables, vegetableName]
+      : selectedVegetables.filter((veg) => veg !== vegetableName);
+    setSelectedVegetables(updatedSelection);
+    onSelectionChange(updatedSelection); // Call the callback with updated selection
   };
 
   // Save the chosen vegetables preference in Local Storage

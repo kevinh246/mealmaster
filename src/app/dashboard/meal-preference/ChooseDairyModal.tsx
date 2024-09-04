@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export default function ChooseDairyModal({
   openDairyModal,
   setOpenDairyModal,
+  onSelectionChange, // Accept the callback as a prop
 }: {
   openDairyModal: boolean;
   setOpenDairyModal: (open: boolean) => void;
+  onSelectionChange: (selected: string[]) => void; // Define the callback type
 }) {
   // Reference of the dairy dialog box
   const dairyModalRef = useRef<HTMLDialogElement>(null);
@@ -31,9 +33,11 @@ export default function ChooseDairyModal({
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedDairy((prev) =>
-      isChecked ? [...prev, dairyName] : prev.filter((d) => d !== dairyName)
-    );
+    const updatedSelection = isChecked
+      ? [...selectedDairy, dairyName]
+      : selectedDairy.filter((d) => d !== dairyName);
+    setSelectedDairy(updatedSelection);
+    onSelectionChange(updatedSelection); // Call the callback with updated selection
   };
 
   // Save the chosen dairy preference in Local Storage

@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export default function ChooseSeafoodModal({
   openSeafoodModal,
   setOpenSeafoodModal,
+  onSelectionChange, // Accept the callback as a prop
 }: {
   openSeafoodModal: boolean;
   setOpenSeafoodModal: (open: boolean) => void;
+  onSelectionChange: (selected: string[]) => void; // Define the callback type
 }) {
   // Reference of the seafood dialog box
   const seafoodModalRef = useRef<HTMLDialogElement>(null);
@@ -34,9 +36,11 @@ export default function ChooseSeafoodModal({
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedSeafood((prev) =>
-      isChecked ? [...prev, seafoodName] : prev.filter((s) => s !== seafoodName)
-    );
+    const updatedSelection = isChecked
+      ? [...selectedSeafood, seafoodName]
+      : selectedSeafood.filter((s) => s !== seafoodName);
+    setSelectedSeafood(updatedSelection);
+    onSelectionChange(updatedSelection); // Call the callback with updated selection
   };
 
   // Save the chosen seafood preference in Local Storage

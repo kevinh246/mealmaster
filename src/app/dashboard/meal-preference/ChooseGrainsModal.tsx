@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export default function ChooseGrainsModal({
   openGrainModal,
   setOpenGrainModal,
+  onSelectionChange, // Accept the callback as a prop
 }: {
   openGrainModal: boolean;
   setOpenGrainModal: (open: boolean) => void;
+  onSelectionChange: (selected: string[]) => void; // Define the callback type
 }) {
   // Reference of the grains dialog box
   const grainModalRef = useRef<HTMLDialogElement>(null);
@@ -29,13 +31,15 @@ export default function ChooseGrainsModal({
   // Handle change functions for each grains
   const handleGrainsChange = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
-    grains: string,
+    grainName: string,
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedGrains((prev) =>
-      isChecked ? [...prev, grains] : prev.filter((m) => m !== grains)
-    );
+    const updatedSelection = isChecked
+      ? [...selectedGrains, grainName]
+      : selectedGrains.filter((g) => g !== grainName);
+    setSelectedGrains(updatedSelection);
+    onSelectionChange(updatedSelection); // Call the callback with updated selection
   };
 
   // Save the chosen grains preference in Local Storage

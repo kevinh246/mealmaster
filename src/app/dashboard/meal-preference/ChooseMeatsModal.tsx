@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export default function ChooseMeatsModal({
   openMeatModal,
   setOpenMeatModal,
+  onSelectionChange, // Accept the callback as a prop
 }: {
   openMeatModal: boolean;
   setOpenMeatModal: (open: boolean) => void;
+  onSelectionChange: (selected: string[]) => void; // Define the callback type
 }) {
   // Reference of the meat dialog box
   const meatModalRef = useRef<HTMLDialogElement>(null);
@@ -24,13 +26,15 @@ export default function ChooseMeatsModal({
   // Handle change functions for each meat
   const handleMeatChange = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
-    meat: string,
+    meatName: string,
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedMeats((prev) =>
-      isChecked ? [...prev, meat] : prev.filter((m) => m !== meat)
-    );
+    const updatedSelection = isChecked
+      ? [...selectedMeats, meatName]
+      : selectedMeats.filter((m) => m !== meatName);
+    setSelectedMeats(updatedSelection);
+    onSelectionChange(updatedSelection); // Call the callback with updated selection
   };
 
   // Save the chosen meat preference in Local Storage

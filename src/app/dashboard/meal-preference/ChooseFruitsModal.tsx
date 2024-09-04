@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export default function ChooseFruitsModal({
   openFruitModal,
   setOpenFruitModal,
+  onSelectionChange, // Accept the callback as a prop
 }: {
   openFruitModal: boolean;
   setOpenFruitModal: (open: boolean) => void;
+  onSelectionChange: (selected: string[]) => void; // Define the callback type
 }) {
   // Reference of the fruits dialog box
   const fruitsModalRef = useRef<HTMLDialogElement>(null);
@@ -34,9 +36,11 @@ export default function ChooseFruitsModal({
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedFruits((prev) =>
-      isChecked ? [...prev, fruitName] : prev.filter((f) => f !== fruitName)
-    );
+    const updatedSelection = isChecked
+      ? [...selectedFruits, fruitName]
+      : selectedFruits.filter((f) => f !== fruitName);
+    setSelectedFruits(updatedSelection);
+    onSelectionChange(updatedSelection); // Call the callback with updated selection
   };
 
   // Save the chosen fruits preference in Local Storage
