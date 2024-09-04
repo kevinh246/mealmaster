@@ -85,17 +85,18 @@ export default function Page() {
       );
 
       // Clear all other preferences
-      //   localStorage.removeItem("vegetablesPreference");
-      //   localStorage.removeItem("diaryPreference");
-      //   localStorage.removeItem("meatPreference");
-      //   localStorage.removeItem("grainsPreference");
-      //   localStorage.removeItem("fruitsPreference");
-      //   localStorage.removeItem("seafoodPreference");
-      //   localStorage.removeItem("mealPreferencesGroup");
+      localStorage.removeItem("vegetablesPreference");
+      localStorage.removeItem("diaryPreference");
+      localStorage.removeItem("meatPreference");
+      localStorage.removeItem("grainsPreference");
+      localStorage.removeItem("fruitsPreference");
+      localStorage.removeItem("seafoodPreference");
+      localStorage.removeItem("mealPreferencesGroup");
 
       setIsLoading(false);
       router.push("/dashboard/meal-plan");
-    } catch (error: any) {
+    } 
+    catch (error: any) {
       setIsLoading(false);
       console.error(error.message);
     }
