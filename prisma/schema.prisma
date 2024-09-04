@@ -1,23 +1,33 @@
 generator client {
-  provider = "prisma-client-js"
+ provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+ provider = "postgresql"
+ url      = env("DATABASE_URL")
 }
 
-model UserAcccount {
-  id String @id @default(uuid())
-  email String
-  fullname String
-  onboardingCompleted Boolean @default(false)
+model UserAccount {
+ id String @id @default(uuid())
+ email String
+ fullname String
 
-  vegetablesPreference Json
-  dairyPreference Json
-  meatPreference Json
-  grainsPreference Json
-  fruitsPreference Json
-  seafoodPreference Json
-  hasGenerated Boolean @default(false)
+ gender String
+ weight Int
+ age Int
+ active String
+ onboardingCompleted Boolean @default(false)
+
+ mealPreferenceSetupCompleted Boolean
+ recommendedCalorieIntake Int @default(0)
+
+ vegetablesPreference Json
+ dairyPreference Json
+ meatPreference Json
+ grainsPreference Json
+ fruitsPreference Json
+ seafoodPreference Json
+
+ hasGenerated Boolean @default(false)
+ generationLimit Int @default(0)
 }
