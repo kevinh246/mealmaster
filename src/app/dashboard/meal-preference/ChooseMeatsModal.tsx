@@ -2,18 +2,13 @@
 
 import { useRef, useState } from "react";
 
-export default function ChooseMeatsModal(
-    { 
-        openMeatModal, 
-        setOpenMeatModal,
-    } 
-    : 
-    {
-        openMeatModal: boolean,
-        setOpenMeatModal: (open: boolean) => void,
-    }
-) {
-
+export default function ChooseMeatsModal({
+  openMeatModal,
+  setOpenMeatModal,
+}: {
+  openMeatModal: boolean;
+  setOpenMeatModal: (open: boolean) => void;
+}) {
   // Reference of the meat dialog box
   const meatModalRef = useRef<HTMLDialogElement>(null);
 
@@ -28,13 +23,13 @@ export default function ChooseMeatsModal(
 
   // Handle change functions for each meat
   const handleMeatChange = (
-    setter: React.Dispatch<React.SetStateAction<boolean>>, 
-    meat: string, 
+    setter: React.Dispatch<React.SetStateAction<boolean>>,
+    meat: string,
     isChecked: boolean
   ) => {
     setter(isChecked);
-    setSelectedMeats(prev => 
-      isChecked ? [...prev, meat] : prev.filter(m => m !== meat)
+    setSelectedMeats((prev) =>
+      isChecked ? [...prev, meat] : prev.filter((m) => m !== meat)
     );
   };
 
@@ -47,17 +42,14 @@ export default function ChooseMeatsModal(
   // of the openMeatModal
   if (openMeatModal) {
     meatModalRef?.current?.showModal();
-  }
-  else {
+  } else {
     meatModalRef?.current?.close();
   }
 
   return (
     <dialog id="meat_modal" className="modal" ref={meatModalRef}>
       <div className="modal-box rounded-md">
-        <h3 className="font-medium text-2xl text-center">
-          Select meat types
-        </h3>
+        <h3 className="font-medium text-2xl text-center">Select meat types</h3>
         <p className="mt-2 text-sm text-center text-gray-500">
           You can select one or more from the following options
         </p>
@@ -68,11 +60,7 @@ export default function ChooseMeatsModal(
               className="checkbox rounded-md"
               checked={chicken}
               onChange={(e) =>
-                handleMeatChange(
-                  setChicken,
-                  "Chicken",
-                  e.target.checked
-                )
+                handleMeatChange(setChicken, "Chicken", e.target.checked)
               }
             />
             <span className="ms-3">Chicken</span>
@@ -83,11 +71,7 @@ export default function ChooseMeatsModal(
               className="checkbox rounded-md"
               checked={pork}
               onChange={(e) =>
-                handleMeatChange(
-                  setPork,
-                  "Pork",
-                  e.target.checked
-                )
+                handleMeatChange(setPork, "Pork", e.target.checked)
               }
             />
             <span className="ms-3">Pork</span>
@@ -98,11 +82,7 @@ export default function ChooseMeatsModal(
               className="checkbox rounded-md"
               checked={beef}
               onChange={(e) =>
-                handleMeatChange(
-                  setBeef,
-                  "Beef",
-                  e.target.checked
-                )
+                handleMeatChange(setBeef, "Beef", e.target.checked)
               }
             />
             <span className="ms-3">Beef</span>
@@ -113,16 +93,11 @@ export default function ChooseMeatsModal(
               className="checkbox rounded-md"
               checked={lamb}
               onChange={(e) =>
-                handleMeatChange(
-                  setLamb,
-                  "Lamb",
-                  e.target.checked
-                )
+                handleMeatChange(setLamb, "Lamb", e.target.checked)
               }
             />
             <span className="ms-3">Lamb</span>
           </div>
-
         </div>
         <div className="mt-5">
           <p className="text-sm text-center text-gray-500">
@@ -132,8 +107,8 @@ export default function ChooseMeatsModal(
           <button
             className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none mt-3 px-20 rounded-full w-full"
             onClick={() => {
-                setOpenMeatModal(false);
-                saveMeatPreference();
+              setOpenMeatModal(false);
+              saveMeatPreference();
             }}
           >
             Save selection
