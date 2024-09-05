@@ -1,7 +1,6 @@
 import CenterContainer from "@/components/CenterContainer";
 import { SignUp } from "@clerk/nextjs";
 
-
 const UserProfilePage = () => (
  <CenterContainer>
    <SignUp
