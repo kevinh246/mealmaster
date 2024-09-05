@@ -7,20 +7,32 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   const router = useRouter();
-  const [userMealPreference, setUserMealPreference] = useState<any>(null);
   const [mealPreferencesGroup, setMealPreferencesGroup] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // Ensure window is defined
     if (typeof window !== "undefined") {
-      const storedPreferences = localStorage.getItem("mealPreferencesGroup");
-      if (storedPreferences) {
-        const parsedPreferences = JSON.parse(storedPreferences);
-        setMealPreferencesGroup(parsedPreferences);
-        setUserMealPreference(parsedPreferences);
-        checkValidMealPreferences(parsedPreferences);
+      const vegetables = JSON.parse(localStorage.getItem("vegetablesPreference") || "[]");
+      const dairy = JSON.parse(localStorage.getItem("dairyPreference")!);
+      const meat = JSON.parse(localStorage.getItem("meatPreference") || "[]");
+      const grains = JSON.parse(localStorage.getItem("grainsPreference") || "[]");
+      const fruits = JSON.parse(localStorage.getItem("fruitsPreference") || "[]");
+      const seafood = JSON.parse(localStorage.getItem("seafoodPreference") || "[]");
+
+      // console.log(dairy)
+      
+      if (vegetables?.length || dairy?.length || meat?.length || grains?.length || fruits?.length || seafood?.length) {
+        setMealPreferencesGroup({
+          Vegetables: vegetables,
+          Dairy: dairy,
+          Meat: meat,
+          Grain: grains,
+          Fruit: fruits,
+          Seafood: seafood
+        });
       } else {
-        // Redirect if meal preferences are not set
+        // Redirect if no meal preferences are set
         router.push("/dashboard/meal-preference");
       }
     }
@@ -52,7 +64,6 @@ export default function Page() {
     }
   }
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   async function generateMealPlan() {
     setIsLoading(true);
     console.log(mealPreferencesGroup);
@@ -77,11 +88,10 @@ export default function Page() {
       }
 
       const recommendedMealPlan = await response.json();
-      // console.log(JSON.parse(recommendedMealPlan["content"])[0]);
       // Save the currently generated meal plan to localStorage
       localStorage.setItem(
         "currentMealPlan",
-        JSON.parse(JSON.stringify(recommendedMealPlan["content"]))
+        JSON.stringify(recommendedMealPlan["content"])
       );
 
       // Clear all other preferences
@@ -91,7 +101,6 @@ export default function Page() {
       localStorage.removeItem("grainsPreference");
       localStorage.removeItem("fruitsPreference");
       localStorage.removeItem("seafoodPreference");
-      localStorage.removeItem("mealPreferencesGroup");
 
       setIsLoading(false);
       router.push("/dashboard/meal-plan");
@@ -114,20 +123,16 @@ export default function Page() {
       <p className="text-center mt-3">You have selected the following</p>
 
       <div className="grid grid-cols-3 gap-3 gap-y-5 mx-auto max-w-2xl mt-5 lg:px-8">
-        {["Vegetables", "Dairy", "Meat", "Grain", "Fruit", "Seafood"].map(
-          (category) => (
-            <div key={category} className="border bg-gray-50 px-5 py-3">
-              <h2 className="text-center font-medium">{category}</h2>
-              <ul className="list-disc ms-5 mt-5">
-                {mealPreferencesGroup[category]?.map(
-                  (item: any, index: any) => (
-                    <li key={index}>{item}</li>
-                  )
-                )}
-              </ul>
-            </div>
-          )
-        )}
+        {Object.keys(mealPreferencesGroup).map((category) => (
+          <div key={category} className="border bg-gray-50 px-5 py-3">
+            <h2 className="text-center font-medium">{category}</h2>
+            <ul className="list-disc ms-5 mt-5">
+              {mealPreferencesGroup[category].map((item: any, index: any) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       <div className="text-center mt-5">
