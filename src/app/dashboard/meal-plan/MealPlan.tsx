@@ -8,6 +8,7 @@ export default function MealPlan({ name }: { name: string }) {
   const router = useRouter();
   // const [myMealPlan, setMyMealPlan] = useState<any[]>([]);
 
+  // States to keep track of all meal plan from Monday - Sunday
   const [mondayMealPlan, setMondayMealPlan] = useState<any>();
   const [tuesdayMealPlan, setTuesdayMealPlan] = useState<any>();
   const [wednesdayMealPlan, setWednesdayMealPlan] = useState<any>();
@@ -20,6 +21,7 @@ export default function MealPlan({ name }: { name: string }) {
   useEffect(() => {
     localStorage.removeItem("diaryPreference");
     setIsLoading(true);
+
     // Ensure window is defined
     if (typeof window !== "undefined") {
       const mealPlan = localStorage.getItem("currentMealPlan");
@@ -53,6 +55,7 @@ export default function MealPlan({ name }: { name: string }) {
         Take a look at what we have prepared for you
       </p>
 
+      {/* TODO */}
       <div className="flex justify-end">
         <button
           type="submit"

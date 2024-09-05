@@ -13,9 +13,7 @@ const openai = new OpenAI({
 // Runtime edge will clash with Prisma, hence remove it
 // export const runtime = "edge";
 
-
 const prisma = new PrismaClient();
-
 
 export async function POST(request: Request) {
    try {
@@ -24,13 +22,11 @@ export async function POST(request: Request) {
        // Extract prompt
        const { prompt } = body;
 
-
        // Handle error if prompt is present and not empty
        if (prompt && prompt.trim() !== "") {
            // console.log(prompt);
           
            const user = await currentUser();
-
 
            // Retrieve the recommendedCalorieIntake for the currently logged in user
            let recommendedCalorieIntake = await prisma.userAccount.findUnique({
@@ -84,8 +80,6 @@ export async function POST(request: Request) {
 
            // Extract the content from the response
            const content = chatResponse.choices[0].message.content;
-
-
            return NextResponse.json({ content }, { status: 200 });      
        }
        // Handle error if prompt is present but empty
