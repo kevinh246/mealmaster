@@ -2,11 +2,14 @@
 
 import Container from "@/components/Container";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ReactToPrint from "react-to-print";
 
 export default function MealPlan({ name }: { name: string }) {
   const router = useRouter();
   // const [myMealPlan, setMyMealPlan] = useState<any[]>([]);
+
+  const mealPlanRef = useRef<HTMLDivElement>(null);
 
   // States to keep track of all meal plan from Monday - Sunday
   const [mondayMealPlan, setMondayMealPlan] = useState<any>();
@@ -55,18 +58,22 @@ export default function MealPlan({ name }: { name: string }) {
         Take a look at what we have prepared for you
       </p>
 
-      {/* TODO */}
       <div className="flex justify-end">
-        <button
-          type="submit"
-          className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none mt-3 px-5 rounded-sm"
-        >
-          Print PDF
-        </button>
+        <ReactToPrint
+          trigger={() => (
+            <button
+              type="button"
+              className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none mt-3 px-5 rounded-sm"
+            >
+              Print PDF
+            </button>
+          )}
+          content={() => mealPlanRef.current}
+        />
       </div>
 
       {/* Print all below to pdf */}
-      <div className="border border-gray-300 px-10 py-3 rounded-md mt-5 mb-10 shadow-xl">
+      <div className="border border-gray-300 px-10 py-3 rounded-md mt-5 mb-10 shadow-xl" ref={mealPlanRef}>
         <h2 className="text-center text-2xl font-medium mt-5 mb-10">
           {name}'s Meal Plan
         </h2>
