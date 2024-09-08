@@ -19,5 +19,5 @@
 
 .btn-outline-black {
     @apply
-    bg-transparent hover:bg-gray-50 font-medium rounded-md no-animation shadow-none border border-gray-500 hover:border-gray-500
+    bg-transparent hover:bg-gray-50 font-medium rounded-sm no-animation shadow-none border border-gray-500 hover:border-gray-500
 }

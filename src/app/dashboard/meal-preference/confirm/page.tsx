@@ -66,7 +66,7 @@ export default function Page() {
 
   async function generateMealPlan() {
     setIsLoading(true);
-    console.log(mealPreferencesGroup);
+    // console.log(JSON.stringify(mealPreferencesGroup));
 
     try {
       const response = await fetch(

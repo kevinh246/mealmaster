@@ -1,6 +1,7 @@
 "use client";
 
 import Container from "@/components/Container";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ReactToPrint from "react-to-print";
@@ -58,12 +59,18 @@ export default function MealPlan({ name }: { name: string }) {
         Take a look at what we have prepared for you
       </p>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-3">
+          <Link
+            href="/dashboard/exercises"
+            className="btn btn-outline-black rounded-sm"
+          >
+            View exercise recommendation
+          </Link>
         <ReactToPrint
           trigger={() => (
             <button
               type="button"
-              className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none mt-3 px-5 rounded-sm"
+              className="btn bg-[#59a2f7] hover:bg-[#59a2f7] text-white border-none px-5 rounded-sm"
             >
               Print PDF
             </button>
