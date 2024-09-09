@@ -62,6 +62,9 @@ Run the following command preview the Next.JS App in a web browser
 npm run dev
 ```
 
+## Running the project online
+Link: http://mealmaster-t77.vercel.app
+
 ## Credits
 These project has been design, created and developed by the following developers:
 - [@Brandonkjh](https://github.com/Brandonkjh)
